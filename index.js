@@ -11,7 +11,7 @@ const { PORT, MONGO_URI } = process.env;
 mongoose
   .connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.err(err));
+  .catch(err => console.error(err));
 
 app.use(cors());
 app.use(express.static("public"));
@@ -30,7 +30,7 @@ app.post("/api/users", async (req, res) => {
 
     res.status(201).json(user);
   } catch (error) {
-    console.err(error);
+    console.error(error);
   }
 });
 
