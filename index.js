@@ -22,18 +22,26 @@ app.get("/", (_req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-app.post("/api/users", async (req, res) => {
-  const { username } = req.body;
-  try {
-    const user = new User({ username });
-    await user.save();
+app
+  .route("/api/users")
+  .get(async (req, res) => {
+    const users = await User.find();
+    res.status(200).json(users);
+  })
+  .post(async (req, res) => {
+    console.log(req.body);
 
-    res.status(201).json(user);
-  } catch (error) {
-    console.error(error);
-  }
-});
+    const { username } = req.body;
+    try {
+      const user = new User({ username });
+      await user.save();
 
-const listener = app.listen(PORT || 3000, () => {
-  console.log("Your app is listening on port " + listener.address().port);
-});
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+
+app.listen(PORT || 3000, () =>
+  console.log("Your app is listening on port " + PORT)
+);
