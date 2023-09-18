@@ -36,7 +36,7 @@ app
       const user = new User({ username });
       await user.save();
 
-      res.status(201).json(user);
+      res.status(201).json({ username: user.username, _id: user._id });
     } catch (error) {
       res.status(500).json(error);
     }
