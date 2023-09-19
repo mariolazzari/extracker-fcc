@@ -11,11 +11,11 @@ const ExerciseSchema = new Schema({
   },
   duration: {
     type: Number,
-    required: true,
+    default: 0,
   },
   date: {
-    type: String,
-    required: true,
+    type: Date,
+    default: Date.now,
   },
 });
 
