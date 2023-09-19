@@ -88,13 +88,18 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       .limit(limit)
       .exec();
 
-    console.log(exercises);
-
     const log = exercises.map(exercise => ({
       description: exercise.description,
       duration: exercise.duration,
       date: new Date(exercise.date).toDateString(),
     }));
+
+    console.log({
+      _id: user._id,
+      username: user.username,
+      count: log.length,
+      log,
+    });
 
     res.status(200).json({
       _id: user._id,
