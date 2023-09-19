@@ -94,9 +94,9 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
     }));
 
     res.status(200).json({
-      _id: user._id,
       username: user.username,
       count: log.length,
+      _id: user._id,
       log,
     });
   } catch (error) {
