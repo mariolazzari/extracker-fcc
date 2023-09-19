@@ -87,7 +87,7 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       .select("description duration date")
       .limit(limit);
 
-    const parsedDatesLog = exercises.map(exercise => ({
+    const log = exercises.map(exercise => ({
       description: exercise.description,
       duration: exercise.duration,
       date: new Date(exercise.date).toDateString(),
@@ -96,8 +96,8 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
     res.json({
       _id: user._id,
       username: user.username,
-      count: parsedDatesLog.length,
-      log: parsedDatesLog,
+      count: log.length,
+      log,
     });
   } catch (error) {
     res.status(500).json(error);
