@@ -61,7 +61,7 @@ app.route("/api/users/:_id/exercises").post(async (req, res) => {
       username,
     });
 
-    res.status(201).json({ ...exercise, user });
+    res.status(201).json({ user, ...exercise });
   } catch (ex) {
     res.status(500).json(ex);
   }
