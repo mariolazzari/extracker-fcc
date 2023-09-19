@@ -50,18 +50,22 @@ app.route("/api/users/:_id/exercises").post(async (req, res) => {
     const user = await User.findById(_id);
     const { username } = user;
 
-    const date = req.body.date
-      ? new Date(req.body.date).toDateString()
-      : new Date().toDateString();
+    const date = req.body.date ? new Date(req.body.date) : new Date();
 
-    await Exercise.create({
+    const exercise = await Exercise.create({
       description,
       duration,
       date,
       username,
     });
 
-    res.status(201).json({ _id, username, date, duration, description });
+    res.status(201).json({
+      username: user.username,
+      description: exercise.description,
+      duration: exercise.duration,
+      date: new Date(exercise.date).toDateString(),
+      _id: user._id,
+    });
   } catch (ex) {
     res.status(500).json(ex);
   }
