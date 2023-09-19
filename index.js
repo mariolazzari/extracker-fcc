@@ -44,6 +44,7 @@ app
 
 app.route("/api/users/:_id/exercises").post(async (req, res) => {
   const { description, duration } = req.body;
+  const { _id } = req.params;
 
   try {
     const user = await User.findById(_id);
