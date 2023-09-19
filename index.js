@@ -85,7 +85,8 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       date: { $gte: from, $lte: to },
     })
       .select("description duration date")
-      .limit(limit);
+      .limit(limit)
+      .exec();
 
     const log = exercises.map(exercise => ({
       description: exercise.description,
@@ -93,7 +94,7 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       date: new Date(exercise.date).toDateString(),
     }));
 
-    res.json({
+    res.status(200).json({
       _id: user._id,
       username: user.username,
       count: log.length,
