@@ -54,14 +54,14 @@ app.route("/api/users/:_id/exercises").post(async (req, res) => {
       ? new Date(req.body.date).toDateString()
       : new Date().toDateString();
 
-    const exercise = await Exercise.create({
+    await Exercise.create({
       description,
       duration,
       date,
       username,
     });
 
-    res.status(201).json({ ...user, ...exercise });
+    res.status(201).json({ _id, username, date, duration, description });
   } catch (ex) {
     res.status(500).json(ex);
   }
