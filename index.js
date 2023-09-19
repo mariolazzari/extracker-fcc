@@ -51,7 +51,7 @@ app.route("/api/users/:_id/exercises").post(async (req, res) => {
     const { username } = user;
 
     const date = req.body.date
-      ? req.body.date.toDateString()
+      ? new Date(req.body.date).toDateString()
       : new Date().toDateString();
 
     const exercise = await Exercise.create({
@@ -61,7 +61,7 @@ app.route("/api/users/:_id/exercises").post(async (req, res) => {
       username,
     });
 
-    res.status(201).json({ exercise, user });
+    res.status(201).json({ ...exercise, _id });
   } catch (ex) {
     res.status(500).json(ex);
   }
