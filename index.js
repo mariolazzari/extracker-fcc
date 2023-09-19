@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const User = require("./models/User");
+const Exercise = require("./models/Exercise");
 
 const { PORT, MONGO_URI } = process.env;
 
@@ -24,13 +25,12 @@ app.get("/", (_req, res) => {
 
 app
   .route("/api/users")
-  .get(async (req, res) => {
+  .get(async (_req, res) => {
     const users = await User.find();
+
     res.status(200).json(users);
   })
   .post(async (req, res) => {
-    console.log(req.body);
-
     const { username } = req.body;
     try {
       const user = new User({ username });
@@ -41,6 +41,30 @@ app
       res.status(500).json(error);
     }
   });
+
+app.route("/api/users/:_id/exercises").post(async (req, res) => {
+  const { description, duration } = req.body;
+
+  try {
+    const user = await User.findById(_id);
+    const { username } = user;
+
+    const date = req.body.date
+      ? req.body.date.toDateString()
+      : new Date().toDateString();
+
+    const exercise = await Exercise.create({
+      description,
+      duration,
+      date,
+      username,
+    });
+
+    res.status(201).json({ exercise, user });
+  } catch (ex) {
+    res.status(500).json(ex);
+  }
+});
 
 app.listen(PORT || 3000, () =>
   console.log("Your app is listening on port " + PORT)
