@@ -87,8 +87,6 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       .select("description duration date")
       .limit(limit);
 
-    console.log(exercises);
-
     const log = exercises.map(exercise => ({
       description: exercise.description,
       duration: exercise.duration,
