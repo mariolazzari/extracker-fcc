@@ -87,17 +87,17 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       .select("description duration date")
       .limit(limit);
 
-    const log = exercises.map(exercise => ({
-      description: exercise.description,
-      duration: exercise.duration,
-      date: new Date(exercise.date).toDateString(),
+    const log = exercises.map(ex => ({
+      description: ex.description,
+      duration: ex.duration,
+      date: new Date(ex.date).toDateString(),
     }));
 
     res.status(200).json({
-      username: user.username,
-      count: log.length,
       _id: user._id,
+      username: user.username,
       log,
+      count: exercises.length,
     });
   } catch (error) {
     res.status(500).json(error);
