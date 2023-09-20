@@ -93,6 +93,13 @@ app.route("/api/users/:_id/logs").get(async (req, res) => {
       date: new Date(ex.date).toDateString(),
     }));
 
+    console.log({
+      _id: user._id,
+      username: user.username,
+      log,
+      count: exercises.length,
+    });
+
     res.status(200).json({
       _id: user._id,
       username: user.username,
